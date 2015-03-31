@@ -10,10 +10,9 @@ import UIKit
 
 class Flight: UIView
 {
-    
     override init(frame: CGRect)
     {
-        super.init(frame:CGRect())
+        super.init(frame: frame)
         
         self.frame=CGRectMake(0, 0, 66, 80);
         
@@ -36,18 +35,17 @@ class Flight: UIView
         self.addSubview(flight);
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     
     func getImageRef(p:CGPoint!)->UIImage
     {
-        var imgRef=CGImageCreateWithImageInRect(UIImage(named:"gameArts")!.CGImage , CGRectMake(p.x, p.y, 66, 80));
+        var imgRef = CGImageCreateWithImageInRect(UIImage(named:"gameArts")!.CGImage , CGRectMake(p.x, p.y, 66, 80));
         
-        var uiImg=UIImage(CGImage: imgRef);
+        var uiImg = UIImage(CGImage: imgRef);
         
         return uiImg!;
     }
-
-    
 }

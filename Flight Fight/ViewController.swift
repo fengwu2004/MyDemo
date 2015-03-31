@@ -103,52 +103,65 @@ class ViewController: UIViewController, enemyDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    func start(sender :UITapGestureRecognizer!){
+    func start(sender :UITapGestureRecognizer!)
+    {
         labelStart.removeFromSuperview();
+        
         labelTitle.removeFromSuperview();
+        
         self.loadGame();
     }
-    //loadFlight and gesture
-    func loadGame(){
-        
+    
+    func loadGame()
+    {
         self.view.removeGestureRecognizer(tapToStart!);
-        flight=Flight(frame:CGRectZero);
-        flight!.center=CGPointMake(self.view.center.x, self.view.center.y+130);
+        
+        flight = Flight(frame:CGRectZero);
+        
+        flight.center = CGPointMake(self.view.center.x, self.view.center.y+130);
+        
         self.view.addSubview(flight!);
         
-        let pan=UIPanGestureRecognizer(target: self , action: "move:")
+        let pan = UIPanGestureRecognizer(target: self , action: "move:")
+        
         flight!.addGestureRecognizer(pan);
-        flight!.userInteractionEnabled=true;
+        
+        flight!.userInteractionEnabled = true;
         
         let bgSound = NSURL(fileURLWithPath:NSBundle.mainBundle().pathForResource("game_music",ofType:"mp3")!);
-        avplayer=AVAudioPlayer(contentsOfURL :bgSound, error :nil);
+        
+        avplayer = AVAudioPlayer(contentsOfURL :bgSound, error :nil);
+        
         avplayer.numberOfLoops=NSNotFound;
+        
         avplayer.prepareToPlay();
+        
         avplayer.play();
         
-        enemyTimer=NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "enemy", userInfo: nil, repeats: true);
+        enemyTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "enemy", userInfo: nil, repeats: true);
+        
         enemyTimer.fire();
         
-        timeLine=0;
+        timeLine = 0;
         
-        var updateTimer=NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "update", userInfo: nil, repeats: true);
+        var updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "update", userInfo: nil, repeats: true);
+        
         updateTimer.fire();
     }
+    
     func update()
     {
-//        var bullet:Bullet;
         for var i=0 ;i<bulletArray.count ;++i
         {
-            
-            var bullet=bulletArray.objectAtIndex(i) as Bullet;
+            var bullet = bulletArray.objectAtIndex(i) as Bullet;
             
             var bulletRect : AnyObject!  = bullet.layer.presentationLayer();
 
             var bulletLayer : CALayer! = bulletRect as CALayer;
             
-            for var m=0 ;m<enemyArray.count ;++m{
-                
-                var enemy=enemyArray.objectAtIndex(m) as Enemy;
+            for var m=0 ;m<enemyArray.count ;++m
+            {
+                var enemy = enemyArray.objectAtIndex(m) as Enemy;
                 
                 var enemyRect : AnyObject! = enemy.layer.presentationLayer();
                 
@@ -186,48 +199,69 @@ class ViewController: UIViewController, enemyDelegate
         
     }
     
-    func enemy(){
+    func enemy()
+    {
         timeLine++;
+        
         var y = arc4random() % 4 + 1;
-        if timeLine%2==0{
-            
+        
+        if timeLine % 2==0
+        {
             var enemy=Enemy(enemyType: EnemyType.enemy_1);
+            
             enemy.center=CGPointMake(60*CGFloat(y), -30);
+            
             enemy.delegate=self;
+            
             self.view.addSubview(enemy);
+            
             self.enemyFly(enemy, type: EnemyType.enemy_1);
+            
             enemyArray.addObject(enemy);
-
-        }
-        if timeLine%3==0{
-            
-            var enemy1=Enemy(enemyType: EnemyType.enemy_2);
-            enemy1.delegate=self;
-            enemy1.center=CGPointMake(60*CGFloat(y), -70);
-            self.view.addSubview(enemy1);
-            self.enemyFly(enemy1, type: EnemyType.enemy_2);
-            enemyArray.addObject(enemy1);
-            
-        }
-        if timeLine%6==0{
-            var enemy3=Enemy(enemyType: EnemyType.enemy_3);
-            enemy3.delegate=self;
-            enemy3.center=CGPointMake(60*CGFloat(y), -70);
-            self.view.addSubview(enemy3);
-            self.enemyFly(enemy3, type: EnemyType.enemy_3);
-            enemyArray.addObject(enemy3);
         }
         
+        if timeLine%3 == 0
+        {
+            var enemy1=Enemy(enemyType: EnemyType.enemy_2);
+            
+            enemy1.delegate=self;
+            
+            enemy1.center=CGPointMake(60*CGFloat(y), -70);
+            
+            self.view.addSubview(enemy1);
+            
+            self.enemyFly(enemy1, type: EnemyType.enemy_2);
+            
+            enemyArray.addObject(enemy1);
+        }
+        
+        if timeLine%6==0
+        {
+            var enemy3=Enemy(enemyType: EnemyType.enemy_3);
+            
+            enemy3.delegate=self;
+            
+            enemy3.center=CGPointMake(60*CGFloat(y), -70);
+            
+            self.view.addSubview(enemy3);
+            
+            self.enemyFly(enemy3, type: EnemyType.enemy_3);
+            
+            enemyArray.addObject(enemy3);
+        }
     }
-    func enemyDidStop() {
+    
+    func enemyDidStop()
+    {
         println("123");
     }
     
-    func enemyFly(enemy:Enemy,type:EnemyType){
-        
-        if type==EnemyType.enemy_1{
-            
-            UIView.animateWithDuration(4, animations: {
+    func enemyFly(enemy:Enemy,type:EnemyType)
+    {
+        if type==EnemyType.enemy_1
+        {
+            UIView.animateWithDuration(4, animations:
+                {
                 UIView.setAnimationCurve(UIViewAnimationCurve.Linear);
                 enemy.center=CGPointMake(enemy.center.x, 600);
                 }, completion: {(finished:Bool) in
@@ -253,20 +287,26 @@ class ViewController: UIViewController, enemyDelegate
     }
     
     
-    func move(sender :UIPanGestureRecognizer!){
-        if sender.state==UIGestureRecognizerState.Began{
+    func move(sender :UIPanGestureRecognizer!)
+    {
+        if sender.state==UIGestureRecognizerState.Began
+        {
             //fire
             println("fire");
             fireTimer=NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "bullet", userInfo: nil, repeats: true);
             fireTimer.fire();
             
-        }else if sender.state==UIGestureRecognizerState.Changed{
+        }
+        else if sender.state==UIGestureRecognizerState.Changed
+        {
             
             var p=sender.locationInView(self.view!);
             flight.center=p;
 //            println("\(p)");
             
-        }else if sender.state==UIGestureRecognizerState.Ended{
+        }
+        else if sender.state==UIGestureRecognizerState.Ended
+        {
             //endfire
             println("endfire");
             fireTimer.invalidate();
@@ -274,29 +314,42 @@ class ViewController: UIViewController, enemyDelegate
         }
     }
     
-    func bullet(){
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
-            let bgSound = NSURL(fileURLWithPath:NSBundle.mainBundle().pathForResource("bullet",ofType:"mp3")!);
-            player=AVAudioPlayer(contentsOfURL :bgSound, error :nil);
-            player.prepareToPlay();
-            player.play();
+    func bullet()
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),
+            {
+                let bgSound = NSURL(fileURLWithPath:NSBundle.mainBundle().pathForResource("bullet",ofType:"mp3")!);
+                
+                player = AVAudioPlayer(contentsOfURL :bgSound, error :nil);
+                
+                player.prepareToPlay();
+                
+                player.play();
             }
             
         )
         
-        var bullet=Bullet(frame:CGRectZero);
+        var bullet = Bullet(frame:CGRectZero);
+        
         bullet.center=CGPointMake(flight.center.x, flight.center.y-45);
+        
         self.view.addSubview(bullet);
+        
         bulletArray.addObject(bullet);
-        UIView.animateWithDuration(1, animations: {
+        
+        UIView.animateWithDuration(1,
+            animations:
+            {
+                UIView.setAnimationCurve(UIViewAnimationCurve.Linear);
+                
+                bullet.center=CGPointMake(bullet.center.x, -10);
+            },
             
-            UIView.setAnimationCurve(UIViewAnimationCurve.Linear);
-            bullet.center=CGPointMake(bullet.center.x, -10);
-            }, completion:  {(finished:Bool) in
-                
-                
-            });
+            completion:
+            {
+                (finished:Bool) in
+            }
+        );
     }
     
     
