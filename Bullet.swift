@@ -21,11 +21,15 @@ class Bullet: UIView {
         
 
     }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func getImageRef(p:CGPoint!)->UIImage{
 
-        var imgRef=CGImageCreateWithImageInRect(UIImage(named:"gameArts").CGImage , CGRectMake(p.x, p.y, 6, 14));
+        var imgRef=CGImageCreateWithImageInRect(UIImage(named:"gameArts")!.CGImage , CGRectMake(p.x, p.y, 6, 14));
         var uiImg=UIImage(CGImage: imgRef);
-        return uiImg;
+        return uiImg!;
     }
 }

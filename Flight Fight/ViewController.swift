@@ -24,27 +24,31 @@ var bulletArray:NSMutableArray!;
 var enemyArray:NSMutableArray!;
 
 
-class ViewController: UIViewController ,enemyDelegate{
-    
-    
-    
-    override func viewDidLoad() {
-        
+class ViewController: UIViewController, enemyDelegate
+{
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let bgRect1=CGRectMake(0, 0, 320, 568);
+        let bgRect1 = CGRectMake(0, 0, 320, 568);
         
-        var imgRef=CGImageCreateWithImageInRect(UIImage(named:"gameArts")!.CGImage! , bgRect1)
+        var imgRef = CGImageCreateWithImageInRect(UIImage(named:"gameArts")!.CGImage! , bgRect1)
         
-        let bgimg1=UIImageView(image:UIImage(CGImage: imgRef));
+        let bgimg1 = UIImageView(image:UIImage(CGImage: imgRef));
+        
         bgimg1.layer.anchorPoint=CGPointZero;
+        
         bgimg1.center=CGPointZero;
+        
         self.view.addSubview(bgimg1);
         
         let bgimg2=UIImageView(image:UIImage(CGImage: imgRef));
+        
         bgimg2.layer.anchorPoint=CGPointZero;
+        
         bgimg2.center=CGPointMake(0, -568);
+        
         self.view.addSubview(bgimg2);
         
         //cloud and sky
@@ -130,9 +134,11 @@ class ViewController: UIViewController ,enemyDelegate{
         var updateTimer=NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "update", userInfo: nil, repeats: true);
         updateTimer.fire();
     }
-    func update(){
+    func update()
+    {
 //        var bullet:Bullet;
-        for var i=0 ;i<bulletArray.count ;++i{
+        for var i=0 ;i<bulletArray.count ;++i
+        {
             
             var bullet=bulletArray.objectAtIndex(i) as Bullet;
             

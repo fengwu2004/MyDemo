@@ -87,6 +87,10 @@ class Enemy: UIView {
             
         }
     }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func blowUp() -> Void{
         UIView.beginAnimations(nil, context: nil);
